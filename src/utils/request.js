@@ -47,7 +47,7 @@ service.interceptors.response.use(
       // if the custom code is not 20000, it is judged as an error.
       if (res.code !== 1) {
         // 401标识未登录;
-        if (res.code === 401) {
+        if (res.code === 401 || res.code === 402) {
           // to re-login
           MessageBox.confirm('您的账号未登录，或登录已过期！', '未登录', {
             confirmButtonText: '重新登录',

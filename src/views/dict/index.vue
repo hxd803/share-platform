@@ -69,8 +69,8 @@
     </el-row>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogTitle">
-      <el-form :model="dict" label-width="120px" label-position="left">
-        <el-form-item label="字典编码" :required="isZero">
+      <el-form :model="dict" ref="dictForm" :rules="rules" label-width="120px" label-position="left">
+        <el-form-item label="字典编码" prop="code" :required="isZero">
           <el-input v-model="dict.code" :disabled="!isZero || dialogType === 'edit'"/>
         </el-form-item>
         <el-form-item v-if="!isZero" label="字典名称" >
@@ -122,6 +122,20 @@ export default {
   name: 'Dict',
   data () {
     return {
+      rules: {
+        code: [
+          { required: true, message: '请输入字典编码', trigger: 'blur' }
+        ],
+        dictLabel: [
+          { required: true, message: this.isZero ? '请输入字典名称' : '请输入显示值', trigger: 'blur' }
+        ],
+        dictValue: [
+          { required: true, message: '请输入字典值', trigger: 'blur' }
+        ],
+        sort: [
+          { required: true, message: '请输入字典排序', trigger: 'blur' }
+        ]
+      },
       dict: Object.assign({}, defaultDict),
       dictList: [],
       dictItemList: [],
@@ -207,6 +221,13 @@ export default {
     },
     confirmDict () {
       const isEdit = this.dialogType === 'edit'
+
+      let formValid = false
+      this.$refs.dictForm.validate((valid) => {
+        formValid = valid
+      })
+      console.log(formValid)
+      if (!formValid) return
 
       if (isEdit) {
         updateDict(this.dict).then(response => {

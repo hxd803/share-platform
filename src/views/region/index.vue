@@ -37,13 +37,15 @@
             <el-form-item label="区划名称" prop="name" :rules="[{ required: true, message: '区划名称不能为空'}]">
               <el-input v-model="region.name" placeholder="区划名称" />
             </el-form-item>
-            <el-form-item label="区划等级"  prop="level" :rules="[{ required: true, message: '请选择区划登记'}]">
-              <el-radio v-model="region.level" :label="0">国家</el-radio>
-              <el-radio v-model="region.level" :label="1">省份/直辖市</el-radio>
-              <el-radio v-model="region.level" :label="2">地市</el-radio>
-              <el-radio v-model="region.level" :label="3">区县</el-radio>
-              <el-radio v-model="region.level" :label="4">乡镇/街道</el-radio>
-              <el-radio v-model="region.level" :label="5">村委</el-radio>
+            <el-form-item label="区划等级"  prop="level" :rules="[{ required: true, message: '请选择区划等级'}]">
+              <el-radio-group v-model="region.level">
+                <el-radio :label="0">国家</el-radio>
+                <el-radio :label="1">省份/直辖市</el-radio>
+                <el-radio :label="2">地市</el-radio>
+                <el-radio :label="3">区县</el-radio>
+                <el-radio :label="4">乡镇/街道</el-radio>
+                <el-radio :label="5">村委</el-radio>
+              </el-radio-group>
             </el-form-item>
             <el-form-item label="区划排序" prop="sort" :rules="[{ required: true, message: '区划排序不能为空'}]">
               <el-input v-model="region.sort" placeholder="区划排序" />
@@ -160,6 +162,14 @@ export default {
     },
     async confirmRegion () {
       const isEdit = this.dialogType === 'edit'
+
+      let formValid = false
+      this.$refs.regionForm.validate((valid) => {
+        formValid = valid
+      })
+      console.log(formValid)
+      if (!formValid) return
+
       if (isEdit) {
         updateRegion(this.region).then(response => {
           this.dialogVisible = false

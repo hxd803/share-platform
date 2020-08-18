@@ -49,27 +49,27 @@
     </el-table>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogTitle">
-      <el-form :model="menu" label-width="120px" label-position="left">
+      <el-form :model="menu" ref="menuForm" label-width="120px" label-position="left">
         <el-form-item v-if="hasParent" label="上级CODE">
           <el-input v-model="menu.parentCode" disabled/>
         </el-form-item>
         <el-form-item v-if="hasParent" label="上级名称">
           <el-input v-model="menu.parentName" disabled/>
         </el-form-item>
-        <el-form-item label="CODE" required>
+        <el-form-item label="CODE" prop="code" required :rules="[{ required: true, message: '请输入菜单CODE'}]">
           <el-input v-model="menu.code" :disabled="dialogType === 'edit'" placeholder="菜单CODE" />
         </el-form-item>
-        <el-form-item label="名称" required>
-          <el-input v-model="menu.name" placeholder="菜单名称" />
+        <el-form-item label="名称" prop="name" :rules="[{ required: true, message: '请输入菜单名称'}]">
+          <el-input v-model="menu.name" placeholder="菜单名称"/>
         </el-form-item>
-        <el-form-item label="类型" required>
+        <el-form-item label="类型" prop="type" :rules="[{ required: true, message: '请选择菜单类型'}]">
           <el-select v-model="menu.type" placeholder="菜单类型">
             <el-option  key="0" label="菜单" value="0" />
             <el-option  key="1" label="按钮" value="1" />
             <el-option  key="2" label="数据" value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item label="权限URL" required>
+        <el-form-item label="权限URL">
           <el-input v-model="menu.permissionUrl" placeholder="权限URL" />
         </el-form-item>
       </el-form>
@@ -173,6 +173,13 @@ export default {
     },
     confirmMenu () {
       const isEdit = this.dialogType === 'edit'
+
+      let formValid = false
+      this.$refs.menuForm.validate((valid) => {
+        formValid = valid
+      })
+      console.log(formValid)
+      if (!formValid) return
 
       if (isEdit) {
         updateMenu(this.menu).then(response => {

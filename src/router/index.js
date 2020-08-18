@@ -12,6 +12,20 @@ Router.prototype.push = function push (location) {
 
 export const asyncRoutes = [
   {
+    path: '/article',
+    component: Layout,
+    redirect: '/index',
+    meta: { menuCode: 'ARTICLE_MANAGE' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/article/index'),
+        name: 'Article',
+        meta: { title: '文档管理', icon: 'document', affix: true, menuCode: 'ARTICLE_MANAGE' }
+      }
+    ]
+  },
+  {
     path: '/systemManage',
     component: Layout,
     redirect: '/systemManage/userManage',
@@ -53,48 +67,6 @@ export const asyncRoutes = [
         component: () => import('@/views/dict/index'),
         name: 'dictManage',
         meta: { title: '数据字典', menuCode: 'DICT_MANAGE' }
-      }
-    ]
-  },
-  {
-    path: '/workflowManage',
-    component: Layout,
-    redirect: '/workflowManage/workflowDategoryManage',
-    name: 'workflowManage',
-    meta: { title: '流程管理', icon: 's-tools', menuCode: 'WORKFLOW_MANAGE' },
-    children: [
-      {
-        path: 'workflowDategoryManage',
-        component: () => import('@/views/workflow/category/index'),
-        name: 'workflowDategoryManage',
-        meta: { title: '流程分类', menuCode: 'WORKFLOW_DATEGORY_MANAGE' }
-      },
-      {
-        path: 'workflowModelManage',
-        component: () => import('@/views/workflow/model/index'),
-        name: 'workflowModelManage',
-        meta: { title: '流程模型', menuCode: 'WORKFLOW_MODEL_MANAGE' }
-      },
-      {
-        path: 'workflowDeploymentManage',
-        component: () => import('@/views/workflow/deployment/index'),
-        name: 'workflowDeploymentManage',
-        meta: { title: '流程发布', menuCode: 'WORKFLOW_DEPLOYMENT_MANAGE' }
-      }
-
-    ]
-  },
-  {
-    path: '/bpmnManage',
-    component: Layout,
-    redirect: '/bpmnRumen',
-    meta: { menuCode: 'BPMN_RUMEN' },
-    children: [
-      {
-        path: 'bpmnRumen',
-        component: () => import('@/views/bpmn/index'),
-        name: 'bpmnRumen',
-        meta: { title: 'BPMN入门', menuCode: 'BPMN_RUMEN' }
       }
     ]
   },

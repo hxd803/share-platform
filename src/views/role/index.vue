@@ -45,14 +45,14 @@
       :total="totalRecords">
     </el-pagination>
     <el-dialog :visible.sync="dialogVisible" :title="dialogType === 'edit' ? '修改角色' : '新增角色'">
-      <el-form :model="role" label-width="80px" label-position="left">
-        <el-form-item label="CODE" required>
+      <el-form ref="roleForm" :model="role" :rules="rules" label-width="80px" label-position="left">
+        <el-form-item label="CODE" required prop="code">
           <el-input v-model="role.code" :disabled="dialogType === 'edit'" placeholder="角色CODE" />
         </el-form-item>
-        <el-form-item label="名称" required>
+        <el-form-item label="名称" required prop="name">
           <el-input v-model="role.name" :disabled="dialogType === 'edit'" placeholder="角色名称" />
         </el-form-item>
-        <el-form-item label="描述" required>
+        <el-form-item label="描述">
           <el-input
             v-model="role.describe"
             :autosize="{ minRows: 2, maxRows: 4}"
@@ -60,7 +60,7 @@
             placeholder="角色描述"
           />
         </el-form-item>
-        <el-form-item label="授权" required>
+        <el-form-item label="授权">
           <el-tree
             ref="menuTree"
             :data="menus"
@@ -104,6 +104,14 @@ export default {
   name: 'Role',
   data () {
     return {
+      rules: {
+        code: [
+          { required: true, message: '请输入角色CODE', trigger: 'blur' }
+        ],
+        name: [
+          { required: true, message: '请输入角色名称', trigger: 'blur' }
+        ]
+      },
       role: Object.assign({}, defaultRole),
       rolesList: [],
       dialogType: 'new',
@@ -169,6 +177,14 @@ export default {
     },
     async confirmRole () {
       const isEdit = this.dialogType === 'edit'
+
+      let formValid = false
+      this.$refs.roleForm.validate((valid) => {
+        formValid = valid
+      })
+      console.log(formValid)
+      if (!formValid) return
+
       this.role.menus = this.getCheckedMenuIds()
       if (isEdit) {
         updateRole(this.role).then(response => {

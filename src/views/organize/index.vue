@@ -56,11 +56,13 @@
         <el-form-item label="组织名称" prop="name" :rules="[{ required: true, message: '组织名称不能为空'}]">
           <el-input v-model="organize.name" placeholder="组织名称" />
         </el-form-item>
-        <el-form-item label="组织类型"  prop="level" :rules="[{ required: true, message: '请选择组织类型'}]">
-          <el-radio v-model="organize.type" :label="0">集团</el-radio>
-          <el-radio v-model="organize.type" :label="1">公司</el-radio>
-          <el-radio v-model="organize.type" :label="2">部门</el-radio>
-          <el-radio v-model="organize.type" :label="3">组</el-radio>
+        <el-form-item label="组织类型"  prop="type" :rules="[{ required: true, message: '请选择组织类型'}]">
+          <el-radio-group v-model="organize.type">
+            <el-radio :label="0">集团</el-radio>
+            <el-radio :label="1">公司</el-radio>
+            <el-radio :label="2">部门</el-radio>
+            <el-radio :label="3">组</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="排序" prop="sort" :rules="[{ required: true, message: '组织排序不能为空'}]">
           <el-input v-model="organize.sort" placeholder="组织排序" />
@@ -188,6 +190,14 @@ export default {
     // },
     async confirmOrganize () {
       const isEdit = this.dialogType === 'edit'
+
+      let formValid = false
+      this.$refs.organizeForm.validate((valid) => {
+        formValid = valid
+      })
+      console.log(formValid)
+      if (!formValid) return
+
       if (isEdit) {
         updateOrganize(this.organize).then(response => {
           this.dialogVisible = false

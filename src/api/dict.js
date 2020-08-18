@@ -39,3 +39,11 @@ export function deleteDict (data) {
     data
   })
 }
+
+export function dictionary (data) {
+  return request({
+    url: '/manage/dict/dictionary',
+    method: 'post',
+    data
+  })
+}

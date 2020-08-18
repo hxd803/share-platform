@@ -77,20 +77,20 @@
     </el-pagination>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogType === 'edit' ? '修改用户' : '新增用户'">
-      <el-form :model="user" label-width="80px" label-position="left">
-        <el-form-item label="用户名" required>
+      <el-form :model="user" :ref="userForm" :rules="rules" label-width="80px" label-position="left">
+        <el-form-item label="用户名" required prop="username">
           <el-input v-model="user.username" :disabled="dialogType === 'edit'" placeholder="用户名" />
         </el-form-item>
-        <el-form-item label="姓名" required>
+        <el-form-item label="姓名" required prop="realName">
           <el-input v-model="user.realName" placeholder="姓名"/>
         </el-form-item>
-        <el-form-item label="手机号码" required>
+        <el-form-item label="手机号码" required prop="phone">
           <el-input v-model="user.phone" placeholder="手机号码"/>
         </el-form-item>
-        <el-form-item label="e-mail" required>
+        <el-form-item label="e-mail" required prop="email">
           <el-input v-model="user.email" placeholder="e-mail"/>
         </el-form-item>
-        <el-form-item label="角色" required>
+        <el-form-item label="角色">
           <el-checkbox-group v-model="user.roleIds">
             <el-checkbox
               v-for="data in roles"
@@ -116,13 +116,29 @@ import { fetchList as fetchUserList, getUser2Edit, enableUser, disableUser, dele
 const defaultUser = {
   id: 0,
   username: '',
-  password: '',
+  realName: '',
+  phone: '',
+  email: '',
   roleIds: []
 }
 export default {
   name: 'User',
   data () {
     return {
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        realName: [
+          { required: true, message: '请输入姓名', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入手机号码', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: '请输入电子邮箱', trigger: 'blur' }
+        ]
+      },
       user: Object.assign({}, defaultUser),
       userList: [],
       dialogType: 'new',
@@ -166,6 +182,14 @@ export default {
     },
     async confirmUser () {
       const isEdit = this.dialogType === 'edit'
+
+      let formValid = false
+      this.$refs.userForm.validate((valid) => {
+        formValid = valid
+      })
+      console.log(formValid)
+      if (!formValid) return
+
       if (isEdit) {
         updateUser(this.user).then(response => {
           this.dialogVisible = false
