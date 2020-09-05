@@ -17,6 +17,7 @@
     "diagram-js-minimap": "^2.0.3",
     "element-ui": "^2.12.0",
     "js-cookie": "2.2.0",
+    "js-md5": "^0.7.3",
     "moment": "^2.25.3",
     "node-sass": "^4.14.1",
     "normalize.css": "7.0.0",

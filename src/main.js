@@ -10,8 +10,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 import '@/styles/index.scss'
 import { parseTime } from '@/utils/index'
+import md5 from 'js-md5'
 
 Vue.filter('parseTime', (value, format) => parseTime(value, format))
+Vue.prototype.$md5 = md5
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

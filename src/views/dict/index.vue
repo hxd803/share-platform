@@ -69,7 +69,7 @@
     </el-row>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogTitle">
-      <el-form :model="dict" ref="dictForm" :rules="rules" label-width="120px" label-position="left">
+      <el-form :model="dict" ref="dictForm" :rules="rules" label-width="120px" label-position="left" size="small">
         <el-form-item label="字典编码" prop="code" :required="isZero">
           <el-input v-model="dict.code" :disabled="!isZero || dialogType === 'edit'"/>
         </el-form-item>
@@ -93,11 +93,11 @@
             placeholder="备注"
           />
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="confirmDict">保存</el-button>
+          <el-button @click="dialogVisible=false">取消</el-button>
+        </el-form-item>
       </el-form>
-      <div style="text-align:right;">
-        <el-button type="primary" @click="confirmDict">保存</el-button>
-        <el-button @click="dialogVisible=false">取消</el-button>
-      </div>
     </el-dialog>
   </div>
 </template>

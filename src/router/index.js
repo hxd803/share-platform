@@ -26,6 +26,74 @@ export const asyncRoutes = [
     ]
   },
   {
+    path: '/merchant',
+    component: Layout,
+    redirect: '/merchant/index',
+    meta: { title: '商户管理', icon: 'office-building', menuCode: 'MERCHANT_MANAGE' },
+    children: [
+      {
+        path: 'merchant-user',
+        component: () => import('@/views/merchant/user'),
+        name: 'MerchantUser',
+        meta: { title: '商户操作员管理', affix: true, menuCode: 'MERCHANT_USER_MANAGE' }
+      },
+      {
+        path: 'index',
+        component: () => import('@/views/merchant/index'),
+        name: 'MerchantInfo',
+        meta: { title: '商户信息管理', affix: true, menuCode: 'MERCHANT_INFO_MANAGE' }
+      },
+      {
+        path: 'rate-config',
+        component: () => import('@/views/merchant/rate-config'),
+        name: 'MerchantRateConfig',
+        meta: { title: '服务费率配置', affix: true, menuCode: 'MERCHANT_RATE_CONFIG' }
+      }
+    ]
+  },
+  // {
+  //   path: '/merchant-user',
+  //   component: Layout,
+  //   redirect: '/index',
+  //   meta: { menuCode: 'MERCHANT_USER_MANAGE' },
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/merchant/user'),
+  //       name: 'MerchantUser',
+  //       meta: { title: 'merchant-user', icon: 'document', affix: true, menuCode: 'MERCHANT_USER_MANAGE' }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/rate-config',
+  //   component: Layout,
+  //   redirect: '/index',
+  //   meta: { menuCode: 'MERCHANT_RATE_CONFIG' },
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/merchant/rate-config'),
+  //       name: 'MerchantRateConfig',
+  //       meta: { title: 'rate-config', icon: 'document', affix: true, menuCode: 'MERCHANT_RATE_CONFIG' }
+  //     }
+  //   ]
+  // },
+  {
+    path: '/service-platform',
+    component: Layout,
+    redirect: '/index',
+    meta: { menuCode: 'PLATFORM_INFO_MANAGE' },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/service-platform/index'),
+        name: 'ServicePlatform',
+        meta: { title: '平台信息配置', icon: 'document', affix: true, menuCode: 'PLATFORM_INFO_MANAGE' }
+      }
+    ]
+  },
+  {
     path: '/systemManage',
     component: Layout,
     redirect: '/systemManage/userManage',

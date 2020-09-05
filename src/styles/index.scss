@@ -52,3 +52,55 @@ a:hover {
     margin-right: 3px;
   }
 }
+
+.app-container {
+  .searchBtn {
+      margin-left: 12px;
+  }
+  .filter-container{
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      border: 1px solid #ebebeb;
+      border-radius: 3px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      padding-left: 10px;
+  }
+  .search-view {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      -webkit-box-pack: start;
+      -ms-flex-pack: start;
+      justify-content: flex-start;
+      // margin-left: -20px;
+      .el-form-item__label {
+        font-weight: 400;
+        margin-left: 10px;
+        font-size: 13px;
+      }
+  }
+  
+  .filter-item {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin-bottom: 20px;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      .label {
+          text-align: right;
+          margin-right: 15px;
+          color: #303133;
+          font-size: 13px;
+          min-width: 90px;
+          width: 90px;
+      }
+      .el-input {
+          width: 159px;
+      }
+  }
+}

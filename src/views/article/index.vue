@@ -23,8 +23,7 @@
         <template slot-scope="scope">
           <el-image v-if="scope.row.imageUrl"
             style="width: 100px; height: 100px"
-            :src="scope.row.imageUrl"
-            :fit="fit"></el-image>
+            :src="scope.row.imageUrl"></el-image>
         </template>
       </el-table-column>
       <el-table-column
@@ -76,7 +75,7 @@
       :total="totalRecords">
     </el-pagination>
     <el-dialog :visible.sync="dialogVisible" :title="dialogType === 'edit' ? '修改文档' : '新增文档'">
-      <el-form :model="article" ref="articleForm" label-width="80px" label-position="left">
+      <el-form :model="article" ref="articleForm" label-width="80px" label-position="left" size="small">
         <el-form-item label="类型" required prop="type" :rules="[{ required: true, message: '请选择类型'}]">
           <el-select v-model="article.type">
             <el-option v-for="item in types" :key="item.id" :value="item.dictValue" :label="item.dictLabel" ></el-option>
@@ -115,8 +114,8 @@
         </el-form-item>
       </el-form>
       <div style="text-align:right;">
-        <el-button type="primary" @click="confirmArticle">保存</el-button>
-        <el-button @click="dialogVisible=false">取消</el-button>
+        <el-button type="primary" @click="confirmArticle" size="small">保存</el-button>
+        <el-button @click="dialogVisible=false" size="small">取消</el-button>
       </div>
     </el-dialog>
   </div>

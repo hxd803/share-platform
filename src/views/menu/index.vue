@@ -49,7 +49,7 @@
     </el-table>
 
     <el-dialog :visible.sync="dialogVisible" :title="dialogTitle">
-      <el-form :model="menu" ref="menuForm" label-width="120px" label-position="left">
+      <el-form :model="menu" ref="menuForm" label-width="120px" label-position="left" size="small">
         <el-form-item v-if="hasParent" label="上级CODE">
           <el-input v-model="menu.parentCode" disabled/>
         </el-form-item>
@@ -72,11 +72,11 @@
         <el-form-item label="权限URL">
           <el-input v-model="menu.permissionUrl" placeholder="权限URL" />
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="confirmMenu">保存</el-button>
+          <el-button @click="dialogVisible=false">取消</el-button>
+        </el-form-item>
       </el-form>
-      <div style="text-align:right;">
-        <el-button type="primary" @click="confirmMenu">保存</el-button>
-        <el-button @click="dialogVisible=false">取消</el-button>
-      </div>
     </el-dialog>
   </div>
 </template>

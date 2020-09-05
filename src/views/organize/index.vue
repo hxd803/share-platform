@@ -45,7 +45,7 @@
       </el-table-column>
     </el-table>
     <el-dialog :visible.sync="dialogVisible" :title="dialogTitle">
-      <el-form :model="organize" ref="organizeForm" label-width="100px" label-position="left">
+      <el-form :model="organize" ref="organizeForm" label-width="100px" label-position="left" size="small">
         <el-form-item label="上级组织" prop="parentName">
           <el-select :value="parentSelectValue" :clearable="true" @clear="clearParentSelect" class="parent-select">
             <el-option :value="parentSelectValue" class="organize-tree-option">

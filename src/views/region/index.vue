@@ -24,7 +24,7 @@
           <el-button type="primary" size="small" icon="el-icon-delete" @click="handleDelete">删除</el-button>
         </el-card>
         <el-card class="region-form-card">
-          <el-form :model="region" ref="regionForm" label-width="100px" label-position="left">
+          <el-form :model="region" ref="regionForm" label-width="100px" label-position="left" size="small">
             <el-form-item label="父区划编号" prop="parentCode">
               <el-input v-model="region.parentCode" disabled placeholder="父级区划编号" />
             </el-form-item>

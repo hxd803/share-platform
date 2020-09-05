@@ -45,7 +45,7 @@
       :total="totalRecords">
     </el-pagination>
     <el-dialog :visible.sync="dialogVisible" :title="dialogType === 'edit' ? '修改角色' : '新增角色'">
-      <el-form ref="roleForm" :model="role" :rules="rules" label-width="80px" label-position="left">
+      <el-form ref="roleForm" :model="role" :rules="rules" label-width="80px" label-position="left" size="small">
         <el-form-item label="CODE" required prop="code">
           <el-input v-model="role.code" :disabled="dialogType === 'edit'" placeholder="角色CODE" />
         </el-form-item>
@@ -79,11 +79,11 @@
             </span>
           </el-tree>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="confirmRole">保存</el-button>
+          <el-button @click="dialogVisible=false">取消</el-button>
+        </el-form-item>
       </el-form>
-      <div style="text-align:right;">
-        <el-button type="primary" @click="confirmRole">保存</el-button>
-        <el-button @click="dialogVisible=false">取消</el-button>
-      </div>
     </el-dialog>
   </div>
 </template>
