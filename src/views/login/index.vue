@@ -1,6 +1,7 @@
 <template>
   <div class="login-container">
-    <el-form  ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left" size="small">
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+             label-position="left" size="small">
       <div class="title-container">
         <h3 class="title">Login Form</h3>
       </div>
@@ -50,103 +51,107 @@
         </el-image>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" style="width:100%;margin-bottom:30px;" type="primary" @click.native.prevent="handleLogin">登录</el-button>
+        <el-button :loading="loading" style="width:100%;margin-bottom:30px;" type="primary"
+                   @click.native.prevent="handleLogin">登录
+        </el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import { getCaptchaImg } from '@/api/user'
+  import {getCaptchaImg} from '@/api/user'
 
-export default {
-  name: 'Login',
-  data () {
-    const validateUsername = (rule, value, callback) => {
-      if (value.trim() === '') {
-        callback(new Error('请输入用户名'))
-      } else {
-        callback()
-      }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('请输入密码'))
-      } else {
-        callback()
-      }
-    }
-    const validateCaptcha = (rule, value, callback) => {
-      if (value.length < 4) {
-        callback(new Error('请输入验证码'))
-      } else {
-        callback()
-      }
-    }
-    return {
-      loginForm: {
-        username: '',
-        password: '',
-        captcha: '',
-        captchaKey: ''
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        captcha: [{ required: true, trigger: 'blur', validator: validateCaptcha }]
-      },
-      loading: false,
-      redirect: undefined,
-      captchaImg: ''
-    }
-  },
-  watch: {
-    $route: {
-      handler: function (route) {
-        const query = route.query
-        if (query) {
-          this.redirect = query.redirect
-          this.otherQuery = this.getOtherQuery(query)
+  export default {
+    name: 'Login',
+    data() {
+      const validateUsername = (rule, value, callback) => {
+        if (value.trim() === '') {
+          callback(new Error('请输入用户名'))
+        } else {
+          callback()
         }
-      },
-      immediate: true
-    }
-  },
-  mounted () {
-    if (this.loginForm.username === '') {
-      this.$refs.username.focus()
-    }
-    if (this.loginForm.password === '') {
-      this.$refs.password.focus()
-    }
-    this.refreshCaptchaImg()
-  },
-  methods: {
-    async refreshCaptchaImg () {
-      getCaptchaImg().then(response => {
-        this.captchaImg = response.object.image
-        this.loginForm.captchaKey = response.object.key
-      }).catch(() => {})
-    },
-    handleLogin () {
-      this.loading = true
-      this.$store.dispatch('user/login', this.loginForm).then(() => {
-        this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-        this.loading = false
-      }).catch(() => {
-        this.loading = false
-        this.refreshCaptchaImg()
-      })
-    },
-    getOtherQuery (query) {
-      return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== 'redirect') {
-          acc[cur] = query[cur]
+      }
+      const validatePassword = (rule, value, callback) => {
+        if (value.length < 5) {
+          callback(new Error('请输入密码'))
+        } else {
+          callback()
         }
-        return acc
-      }, {})
+      }
+      const validateCaptcha = (rule, value, callback) => {
+        if (value.length < 4) {
+          callback(new Error('请输入验证码'))
+        } else {
+          callback()
+        }
+      }
+      return {
+        loginForm: {
+          username: '',
+          password: '',
+          captcha: '',
+          captchaKey: ''
+        },
+        loginRules: {
+          username: [{required: true, trigger: 'blur', validator: validateUsername}],
+          password: [{required: true, trigger: 'blur', validator: validatePassword}],
+          captcha: [{required: true, trigger: 'blur', validator: validateCaptcha}]
+        },
+        loading: false,
+        redirect: undefined,
+        captchaImg: ''
+      }
+    },
+    watch: {
+      $route: {
+        handler: function (route) {
+          const query = route.query
+          if (query) {
+            this.redirect = query.redirect
+            this.otherQuery = this.getOtherQuery(query)
+          }
+        },
+        immediate: true
+      }
+    },
+    mounted() {
+      if (this.loginForm.username === '') {
+        this.$refs.username.focus()
+      }
+      if (this.loginForm.password === '') {
+        this.$refs.password.focus()
+      }
+      this.refreshCaptchaImg()
+    },
+    methods: {
+      async refreshCaptchaImg() {
+        getCaptchaImg().then(response => {
+          this.captchaImg = response.object.image
+          this.loginForm.captchaKey = response.object.key
+        }).catch(() => {
+        })
+      },
+      handleLogin() {
+        this.loading = true
+        debugger
+        this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$router.push({path: this.redirect || '/', query: this.otherQuery})
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
+          this.refreshCaptchaImg()
+        })
+      },
+      getOtherQuery(query) {
+        return Object.keys(query).reduce((acc, cur) => {
+          if (cur !== 'redirect') {
+            acc[cur] = query[cur]
+          }
+          return acc
+        }, {})
+      }
     }
   }
-}
 </script>
 <style lang="scss" scoped>
   .login-container {
@@ -185,11 +190,13 @@ export default {
         font-weight: bold;
       }
     }
+
     .validacode {
       .el-input {
         width: 380px;
         margin-right: 10px;
       }
+
       .img {
         display: inline-block;
         vertical-align: middle;

@@ -1,91 +1,87 @@
 import request from '@/utils/request'
 
-export function getCaptchaImg () {
+export function getCaptchaImg() {
   return request({
-    url: '/manage/captcha/img',
+    url: '/auth/captcha/img',
     method: 'post'
   })
 }
 
-export function login (data) {
-  return request({
-    url: '/manage/user/login',
-    method: 'post',
-    data
-  })
+export function login(param = {}) {
+  return request.post("/auth/login", param);
 }
 
-export function logout () {
+export function logout() {
   return request({
-    url: '/manage/user/logout',
+    url: '/auth/user/logout',
     method: 'post'
   })
 }
 
-export function getInfo () {
+export function getInfo() {
   return request({
-    url: '/manage/user/getInfo',
+    url: '/auth/user/getInfo',
     method: 'post'
   })
 }
 
-export function fetchList (data) {
+export function fetchList(data) {
   return request({
-    url: '/manage/user/list',
+    url: '/auth/user/list',
     method: 'post',
     data
   })
 }
 
-export function createUser (data) {
+export function createUser(data) {
   return request({
-    url: '/manage/user/create',
+    url: '/auth/user/create',
     method: 'post',
     data
   })
 }
 
-export function updateUser (data) {
+export function updateUser(data) {
   return request({
-    url: '/manage/user/update',
+    url: '/auth/user/update',
     method: 'post',
     data
   })
 }
 
-export function updatePassword (data) {
+export function updatePassword(data) {
   return request({
-    url: '/manage/user/updatePassword',
+    url: '/auth/user/updatePassword',
     method: 'post',
     data
   })
 }
 
-export function getUser2Edit (data) {
+export function getUser2Edit(data) {
   return request({
-    url: '/manage/user/get2Edit',
+    url: '/auth/user/get2Edit',
     method: 'post',
     data
   })
 }
 
-export function enableUser (data) {
+export function enableUser(data) {
   return request({
-    url: '/manage/user/enable',
+    url: '/auth/user/enable',
     method: 'post',
     data
   })
 }
 
-export function disableUser (data) {
+export function disableUser(data) {
   return request({
-    url: '/manage/user/disable',
+    url: '/auth/user/disable',
     method: 'post',
     data
   })
 }
 
-export function deleteUser (data) {
+export function deleteUser(data) {
   return request({
     url: '/manage/user/delete',
     method: 'post',

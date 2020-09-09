@@ -1,15 +1,13 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import {Message, MessageBox} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 const service = axios.create({
-  // headers: {
-  //   'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-  // },
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  withCredentials: true, // send cookies when cross-domain requests
+  timeout: 5000,// request timeout
+  paramsSerializer: params => qs.stringify(params, {arrayFormat: 'repeat'})
 })
 
 // request interceptor
@@ -34,7 +32,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -57,7 +55,8 @@ service.interceptors.response.use(
             store.dispatch('user/resetLoginStatus').then(() => {
               location.reload()
             })
-          }).catch(() => {})
+          }).catch(() => {
+          })
         } else {
           Message({
             message: res.message || 'Error',
@@ -81,5 +80,68 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+
+/**
+ * post 请求方法
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+service.post = (url, data) => {
+  return new Promise((resolve, reject) => {
+    axios.post(url, qs.stringify(data)).then(
+      response => {
+        resolve(response.data)
+      },
+      err => {
+        reject(err)
+      }
+    )
+  })
+}
+
+/**
+ * delete 请求方法
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+service.delete = (url, data) => {
+  return new Promise((resolve, reject) => {
+    axios.delete(url, {params: data}).then(
+      response => {
+        resolve(response.data)
+      },
+      err => {
+        reject(err)
+      }
+    )
+  })
+}
+
+/**
+ * post 请求方法
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+service.post_json = (url, data) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(url, data, {
+        headers: {'Content-Type': 'application/json;charset=UTF-8'}
+      })
+      .then(
+        response => {
+          resolve(response.data)
+        },
+        err => {
+          reject(err)
+        }
+      )
+  })
+}
+
 
 export default service
